@@ -1,0 +1,290 @@
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Inter:wght@400;600&display=swap');
+
+/* =========================
+   VARIÁVEIS
+========================= */
+:root {
+  --paper: #fffdf8;
+  --line: #e4e4e4;
+  --accent: #6a5acd;
+  --shadow-soft: 0 12px 28px rgba(0,0,0,0.12);
+  --shadow-light: 0 8px 18px rgba(0,0,0,0.08);
+}
+
+/* =========================
+   BODY / CAPAS
+========================= */
+body {
+  margin: 0;
+  padding: 25px;
+  font-family: 'Patrick Hand', cursive;
+  background: #f3efe8;
+  color: #2b2b2b;
+}
+
+body.bege {
+  background: #f3efe8;
+}
+
+body.azul {
+  background: #e8f0ff;
+}
+
+body.preto {
+  background: #121212;
+  color: #eaeaea;
+}
+
+body.preto .writing-area,
+body.preto .entrada,
+body.preto .diary-header,
+body.preto .modal {
+  background: #1c1c1c;
+  color: #eaeaea;
+}
+
+/* =========================
+   HEADER / CAPA
+========================= */
+.diary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--paper);
+  padding: 18px 22px 18px 30px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 28px;
+  position: relative;
+}
+
+/* margem vermelha do caderno */
+.diary-header::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  bottom: 14px;
+  width: 3px;
+  background: #e06c75;
+  border-radius: 2px;
+}
+
+.header-left h1 {
+  margin: 0;
+  font-size: 2.1rem;
+}
+
+.date {
+  font-size: 1rem;
+  opacity: 0.6;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.header-actions button,
+.header-actions select {
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: none;
+  background: #f1f1f1;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  box-shadow: var(--shadow-light);
+}
+
+/* upload */
+.upload input {
+  display: none;
+}
+.upload {
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: #f1f1f1;
+  cursor: pointer;
+  box-shadow: var(--shadow-light);
+}
+
+/* =========================
+   ÁREA DE ESCRITA
+========================= */
+.writing-area {
+  background: var(--paper);
+  padding: 22px;
+  border-radius: 18px;
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 35px;
+}
+
+/* folha pautada */
+textarea.pautado {
+  width: 100%;
+  min-height: 180px;
+  resize: vertical;
+  padding: 18px 18px 18px 40px;
+  font-size: 1.2rem;
+  line-height: 28px;
+  font-family: 'Patrick Hand', cursive;
+  border: none;
+  outline: none;
+  background:
+    linear-gradient(to right, transparent 38px, #e06c75 40px, transparent 42px),
+    repeating-linear-gradient(
+      var(--paper),
+      var(--paper) 26px,
+      var(--line) 27px
+    );
+}
+
+/* ferramentas */
+.writing-tools {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+  align-items: center;
+}
+
+.writing-tools select,
+.writing-tools button {
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  background: #f1f1f1;
+  box-shadow: var(--shadow-light);
+}
+
+button.primary {
+  background: var(--accent);
+  color: white;
+}
+
+/* =========================
+   TIMELINE
+========================= */
+.timeline-area {
+  margin-bottom: 35px;
+}
+
+.timeline-area h2,
+.entries-area h2 {
+  margin-bottom: 12px;
+  opacity: 0.8;
+}
+
+/* =========================
+   ENTRADAS
+========================= */
+.entries-area {
+  padding-bottom: 40px;
+}
+
+.entrada {
+  background: var(--paper);
+  padding: 18px 18px 18px 35px;
+  border-radius: 14px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-light);
+  position: relative;
+}
+
+/* margem da página */
+.entrada::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  bottom: 14px;
+  width: 3px;
+  background: #e06c75;
+  opacity: 0.6;
+}
+
+/* tags emocionais */
+.tag-feliz { border-left: 6px solid #6bcf63; }
+.tag-confuso { border-left: 6px solid #f2c94c; }
+.tag-pesado { border-left: 6px solid #5c6bc0; }
+.tag-grato { border-left: 6px solid #56ccf2; }
+
+/* =========================
+   MODAL
+========================= */
+.modal {
+  position: absolute;
+  top: 90px;
+  right: 20px;
+  background: var(--paper);
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: var(--shadow-soft);
+  z-index: 10;
+}
+
+.modal h3 {
+  margin-top: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.postit {
+  transform: rotate(var(--r));
+  margin-left: calc(var(--i) * 6px);
+}
+
+.video-entry {
+  background: #111;
+  padding: 10px;
+  border-radius: 10px;
+  transform: rotate(-1deg);
+  box-shadow: 0 10px 20px rgba(0,0,0,.3);
+}
+
+.heat-day[data-level="4"] { background: #6bcf63 }
+.heat-day[data-level="1"] { background: #5c6bc0 }
+
+
+
+/* =========================
+   RESPONSIVO
+========================= */
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+  }
+
+  .diary-header {
+    flex-direction: column;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .header-actions {
+    flex-wrap: wrap;
+  }
+
+  textarea.pautado {
+    font-size: 1.1rem;
+  }
+}
+
+body {
+  animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

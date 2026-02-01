@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Meu Diário</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+</head>
+
+<body class="bege">
+
+  <!-- 📓 CAPA / TOPO -->
+  <header class="diary-header">
+    <div class="header-left">
+      <h1>📓 Meu Diário</h1>
+      <span class="date">Hoje</span>
+    </div>
+
+    <div class="header-actions">
+      <select onchange="trocarCapa(this.value)">
+        <option value="bege">Bege</option>
+        <option value="azul">Azul</option>
+        <option value="preto">Preto</option>
+      </select>
+
+      <button onclick="toggleDark()">🌙</button>
+      <button onclick="exportarPDF()">📦</button>
+      <label class="upload">
+        🖼️
+        <input type="file" accept="image/*" onchange="uploadCapa(event)">
+      </label>
+      <button onclick="abrirSenha()">🔐</button>
+    </div>
+
+    <!-- MODAL SENHA -->
+    <div id="modalSenha" class="modal hidden">
+      <h3>Trocar senha</h3>
+      <input type="password" id="novaSenha" placeholder="Nova senha">
+      <button onclick="trocarSenha()">Salvar</button>
+    </div>
+  </header>
+
+  <!-- ✍️ FOLHA ATUAL -->
+  <section class="writing-area">
+    <textarea id="texto" class="pautado" placeholder="Escreva como quem conversa consigo..."></textarea>
+
+    <div class="writing-tools">
+      <select id="tipo">
+        <option value="pagina">📄 Página</option>
+        <option value="postit">🟨 Post-it</option>
+      </select>
+
+      <select id="tag">
+        <option value="feliz">😊 Feliz</option>
+        <option value="confuso">😶 Confuso</option>
+        <option value="pesado">🌧️ Pesado</option>
+        <option value="grato">✨ Grato</option>
+      </select>
+
+      <button class="primary" onclick="salvar()">Salvar</button>
+      <button onclick="iniciarVideo()">🎥</button>
+    </div>
+  </section>
+
+  <div class="video-entry">
+    <video controls src="video.webm"></video>
+  </div>
+
+
+  <!-- 🧵 LINHA DO TEMPO -->
+  <section class="timeline-area">
+    <h2>⏳ Linha do tempo emocional</h2>
+    <div id="timeline"></div>
+  </section>
+
+  <!-- 📖 PÁGINAS PASSADAS -->
+  <section class="entries-area">
+    <h2>📖 Páginas anteriores</h2>
+    <div id="entradas"></div>
+  </section>
+
+  <script src="js/crypto.js"></script>
+  <script src="js/diary.js"></script>
+  <script src="js/video.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,6 @@
+body {
+  background-image:
+    url("textures/paper.png"),
+    linear-gradient(#f3efe8, #f3efe8);
+  background-blend-mode: multiply;
+}
