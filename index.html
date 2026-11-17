@@ -1,88 +1,268 @@
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
   <meta charset="UTF-8">
-  <title>Meu Diário</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="theme-color" content="#e8dcc8">
+  <meta name="description" content="Um espaço pessoal para registrar pensamentos, sentimentos e momentos da vida.">
+
+  <title>Meu Diário | Um espaço só seu</title>
+
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+  <!-- Biblioteca para exportação em PDF -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+    defer>
+  </script>
+
+  <!-- Scripts do projeto -->
+  <script src="js/crypto.js" defer></script>
+  <script src="js/diary.js" defer></script>
+  <script src="js/video.js" defer></script>
 </head>
 
 <body class="bege">
 
-  <!-- 📓 CAPA / TOPO -->
+  <!-- CABEÇALHO -->
   <header class="diary-header">
+
     <div class="header-left">
       <h1>📓 Meu Diário</h1>
-      <span class="date">Hoje</span>
+      <p class="date" id="dataAtual">Hoje</p>
     </div>
 
-    <div class="header-actions">
-      <select onchange="trocarCapa(this.value)">
+    <nav class="header-actions" aria-label="Configurações do diário">
+
+      <!-- Personalização -->
+      <label for="capa">Tema:</label>
+
+      <select
+        id="capa"
+        aria-label="Selecionar tema do diário"
+        onchange="trocarCapa(this.value)">
+
         <option value="bege">Bege</option>
         <option value="azul">Azul</option>
         <option value="preto">Preto</option>
+
       </select>
 
-      <button onclick="toggleDark()">🌙</button>
-      <button onclick="exportarPDF()">📦</button>
-      <label class="upload">
-        🖼️
-        <input type="file" accept="image/*" onchange="uploadCapa(event)">
-      </label>
-      <button onclick="abrirSenha()">🔐</button>
-    </div>
+      <!-- Modo escuro -->
+      <button
+        type="button"
+        onclick="toggleDark()"
+        aria-label="Alternar modo escuro"
+        title="Modo escuro">
 
-    <!-- MODAL SENHA -->
-    <div id="modalSenha" class="modal hidden">
-      <h3>Trocar senha</h3>
-      <input type="password" id="novaSenha" placeholder="Nova senha">
-      <button onclick="trocarSenha()">Salvar</button>
-    </div>
+        🌙
+
+      </button>
+
+      <!-- Exportação -->
+      <button
+        type="button"
+        onclick="exportarPDF()"
+        aria-label="Exportar diário em PDF"
+        title="Exportar PDF">
+
+        📦
+
+      </button>
+
+      <!-- Imagem de capa -->
+      <label class="upload" title="Personalizar capa">
+
+        <span aria-hidden="true">🖼️</span>
+
+        <input
+          type="file"
+          id="imagemCapa"
+          accept="image/*"
+          onchange="uploadCapa(event)"
+          aria-label="Enviar imagem para a capa">
+
+      </label>
+
+      <!-- Segurança -->
+      <button
+        type="button"
+        onclick="abrirSenha()"
+        aria-label="Alterar senha"
+        title="Segurança">
+
+        🔐
+
+      </button>
+
+    </nav>
+
+    <!-- MODAL DE SENHA -->
+    <section
+      id="modalSenha"
+      class="modal hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="tituloSenha">
+
+      <h2 id="tituloSenha">🔐 Alterar senha</h2>
+
+      <label for="novaSenha">Nova senha</label>
+
+      <input
+        type="password"
+        id="novaSenha"
+        placeholder="Digite sua nova senha"
+        autocomplete="new-password">
+
+      <div class="modal-actions">
+
+        <button type="button" onclick="trocarSenha()">
+          Salvar senha
+        </button>
+
+      </div>
+
+    </section>
+
   </header>
 
-  <!-- ✍️ FOLHA ATUAL -->
-  <section class="writing-area">
-    <textarea id="texto" class="pautado" placeholder="Escreva como quem conversa consigo..."></textarea>
 
-    <div class="writing-tools">
-      <select id="tipo">
-        <option value="pagina">📄 Página</option>
-        <option value="postit">🟨 Post-it</option>
-      </select>
+  <main id="conteudoDiario">
 
-      <select id="tag">
-        <option value="feliz">😊 Feliz</option>
-        <option value="confuso">😶 Confuso</option>
-        <option value="pesado">🌧️ Pesado</option>
-        <option value="grato">✨ Grato</option>
-      </select>
+    <!-- ÁREA DE ESCRITA -->
+    <section class="writing-area" aria-labelledby="tituloEscrita">
 
-      <button class="primary" onclick="salvar()">Salvar</button>
-      <button onclick="iniciarVideo()">🎥</button>
-    </div>
-  </section>
+      <div class="section-heading">
+        <h2 id="tituloEscrita">✍️ Seu espaço de escrita</h2>
 
-  <div class="video-entry">
-    <video controls src="video.webm"></video>
-  </div>
+        <p>
+          Escreva sem pressa. Este espaço é inteiramente seu.
+        </p>
+      </div>
+
+      <label for="texto" class="visually-hidden">
+        Conteúdo da página do diário
+      </label>
+
+      <textarea
+        id="texto"
+        class="pautado"
+        placeholder="Escreva como quem conversa consigo..."
+        aria-label="Escreva sua entrada no diário">
+      </textarea>
+
+      <!-- FERRAMENTAS -->
+      <div class="writing-tools">
+
+        <label for="tipo">Formato:</label>
+
+        <select id="tipo">
+          <option value="pagina">📄 Página</option>
+          <option value="postit">🟨 Post-it</option>
+        </select>
+
+        <label for="tag">Como você está?</label>
+
+        <select id="tag">
+          <option value="feliz">😊 Feliz</option>
+          <option value="confuso">😶 Confuso</option>
+          <option value="pesado">🌧️ Pesado</option>
+          <option value="grato">✨ Grato</option>
+        </select>
+
+        <button
+          type="button"
+          class="primary"
+          onclick="salvar()">
+
+          💾 Salvar página
+
+        </button>
+
+        <button
+          type="button"
+          onclick="iniciarVideo()"
+          aria-label="Iniciar gravação de vídeo">
+
+          🎥
+
+        </button>
+
+      </div>
+
+    </section>
 
 
-  <!-- 🧵 LINHA DO TEMPO -->
-  <section class="timeline-area">
-    <h2>⏳ Linha do tempo emocional</h2>
-    <div id="timeline"></div>
-  </section>
+    <!-- ÁREA DE VÍDEO -->
+    <section class="video-entry" aria-labelledby="tituloVideo">
 
-  <!-- 📖 PÁGINAS PASSADAS -->
-  <section class="entries-area">
-    <h2>📖 Páginas anteriores</h2>
-    <div id="entradas"></div>
-  </section>
+      <h2 id="tituloVideo">🎥 Registro em vídeo</h2>
 
-  <script src="js/crypto.js"></script>
-  <script src="js/diary.js"></script>
-  <script src="js/video.js"></script>
+      <video
+        id="videoDiario"
+        controls
+        playsinline
+        preload="metadata">
+
+        <source src="video.webm" type="video/webm">
+
+        Seu navegador não oferece suporte à reprodução de vídeo.
+
+      </video>
+
+    </section>
+
+
+    <!-- LINHA DO TEMPO -->
+    <section class="timeline-area" aria-labelledby="tituloTimeline">
+
+      <h2 id="tituloTimeline">⏳ Linha do tempo emocional</h2>
+
+      <p>
+        Reviva os sentimentos registrados ao longo dos dias.
+      </p>
+
+      <div
+        id="timeline"
+        aria-live="polite"
+        aria-label="Linha do tempo das emoções">
+      </div>
+
+    </section>
+
+
+    <!-- PÁGINAS ANTERIORES -->
+    <section class="entries-area" aria-labelledby="tituloEntradas">
+
+      <h2 id="tituloEntradas">📖 Páginas anteriores</h2>
+
+      <p>
+        Suas lembranças, pensamentos e histórias permanecem aqui.
+      </p>
+
+      <div
+        id="entradas"
+        aria-live="polite"
+        aria-label="Entradas anteriores do diário">
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- RODAPÉ -->
+  <footer class="diary-footer">
+
+    <p>
+      📓 Meu Diário · Um espaço para guardar um pouco de quem você é.
+    </p>
+
+  </footer>
+
 </body>
-
 </html>
