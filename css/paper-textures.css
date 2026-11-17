@@ -1,6 +1,48 @@
+
+/* =========================================
+   TEXTURA DE PAPEL
+========================================= */
+
 body {
   background-image:
     url("textures/paper.png"),
-    linear-gradient(#f3efe8, #f3efe8);
+    linear-gradient(var(--background), var(--background));
+
   background-blend-mode: multiply;
+  background-attachment: fixed;
+  background-repeat: repeat;
+}
+
+/* Textura sutil nas páginas */
+.writing-area,
+.entrada {
+  background-image:
+    url("textures/paper.png"),
+    linear-gradient(var(--paper), var(--paper));
+
+  background-blend-mode: multiply;
+}
+
+/* Preservar a textura no tema bege */
+body.bege {
+  background-blend-mode: multiply;
+}
+
+/* Textura mais discreta no tema azul */
+body.azul {
+  background-blend-mode: soft-light;
+}
+
+/* Evitar textura excessiva no tema preto */
+body.preto {
+  background-image:
+    linear-gradient(var(--background), var(--background));
+
+  background-blend-mode: normal;
+}
+
+body.preto .writing-area,
+body.preto .entrada {
+  background-image: none;
+  background-color: var(--paper);
 }
